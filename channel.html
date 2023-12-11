@@ -99,7 +99,7 @@ window.config = {
     match: {
         parentId: "div#player",
         position: "top-right",
-        source: sexurl,
+        source: { src: sexurl, 'playsinline': true },
         mimeType: "application/x-mpegURL",
   		mediacontrol: {seekbar: "#181929"},
   		plugins: [ChromecastPlugin],
