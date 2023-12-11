@@ -1,59 +1,52 @@
 (function($) {
 
+    // Cihazın mobil olup olmadığını kontrol eden fonksiyon
+    function isMobileDevice() {
+        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    };
+
     $(window.document).ready(function() {
         var autoPlay = true,
             chromeless = false,
             skipCounter, skipInterval, skipOffset, skipText;
 
-        if (Clappr.Browser.isMobile) {
+        if (Clappr.Browser.isMobile || isMobileDevice()) {
             autoPlay = false;
             chromeless = false;
         }
+
+        // Clappr oynatıcısının yapılandırmasını burada güncelleyebilirsiniz
+        var clapprConfig = {
+            autoPlay: autoPlay,
+            disableKeyboardShortcuts: true,
+            disableVideoTagContextMenu: true,
+            exitFullscreenOnEnd: false,
+            language: "tr-TR",
+            width: '100%',
+            height: $(window).innerHeight()
+        };
+
+        // Eğer cihaz mobil ise, tam ekran modunu devre dışı bırak
+        if (isMobileDevice()) {
+            clapprConfig.fullscreenEnabled = false;
+        }
+
         window.app = {
             clappr: {
                 currentTime: function() {
                     return window.Math.round(window.app.clappr.instance.getCurrentTime(), 0);
                 },
-                instance: new Clappr.Player({}),
+                instance: new Clappr.Player(clapprConfig),
                 isBuffering: function() {
                     return window.app.clappr.instance.core.mediaControl.container.buffering;
                 },
                 resizeCallback: function() {
-
-                    /*
-                    window.app.clappr.instance.resize({
-                        width: $(window).innerWidth(),
-                        height: $(window).innerHeight()
-                    });*/
-
                     $('div[data-player]').css({
                         width: $(window).innerWidth()+'px',
                         height: $(window).innerHeight()+'px'
                     });
                 },
-                options: {
-                    autoPlay: autoPlay,
-                    disableKeyboardShortcuts: true,
-                    disableVideoTagContextMenu: true,
-                    exitFullscreenOnEnd: false,
-                    //height: $(window).innerHeight(),
-                    language: "tr-TR",
-                    //persistConfig: false,
-                    /*
-                    mediacontrol: {
-                        buttons: "#fff",
-                        seekbar: "#fff",
-                    },*/
-                    strings: {
-                        "tr-TR": {
-                            back_to_live: "CanlÃƒâ€Ã‚Â± yayÃƒâ€Ã‚Â±na geri dÃƒÆ’Ã‚Â¶n",
-                            live: "CanlÃƒâ€Ã‚Â± | TRGoals",
-                            playback_not_supported: "TarayÃƒâ€Ã‚Â±cÃƒâ€Ã‚Â±nÃƒâ€Ã‚Â±z bu ortamÃƒâ€Ã‚Â± oynatamÃƒâ€Ã‚Â±yor, lÃƒÆ’Ã‚Â¼tfen gÃƒÆ’Ã‚Â¼ncel bir tarayÃƒâ€Ã‚Â±cÃƒâ€Ã‚Â± ile deneyiniz."
-                        },
-                    },
-                    width: '100%',
-                    height: $(window).innerHeight()
-                },
+                options: clapprConfig,
             },
             extend: function(defaults, options) {
                 return $.extend({}, defaults, options);
