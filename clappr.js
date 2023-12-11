@@ -42,7 +42,7 @@
                     autoPlay: autoPlay,
                     disableKeyboardShortcuts: true,
                     disableVideoTagContextMenu: true,
-                    exitFullscreenOnEnd: false,
+                    exitFullscreenOnEnd: true,
                     //height: $(window).innerHeight(),
                     language: "tr-TR",
                     //persistConfig: false,
