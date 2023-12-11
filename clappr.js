@@ -74,7 +74,6 @@
             },
             initAdv: function() {
                 window.app.initContainer(window.config.adv.parentId);
-                window.app.clappr.options.fullscreen = false;
                 window.config.adv = window.app.extend({
                     link: "",
                     skipOffset: 5,
@@ -85,12 +84,6 @@
                     chromeless: chromeless,
                 })));
                 window.app.initAdvEvents();
-
-                window.app.clappr.instance.on(Clappr.Events.PLAYER_FULLSCREEN, function(e) {
-                    e.preventDefault(); // Tam ekran moduna geçişi engelle
-                    return false;
-                });
-                
             },
             initAdvEvents: function() {
                 window.app.clappr.instance.once(Clappr.Events.PLAYER_ENDED, window.app.skip);
@@ -106,13 +99,8 @@
             },
             initMatch: function() {
                 window.app.initContainer(window.config.match.parentId);
-                window.app.clappr.options.fullscreen = false;
                 window.app.clappr.instance = new Clappr.Player(window.app.extend(window.app.clappr.options, window.config.match));
                 window.app.initMatchEvents();
-                window.app.clappr.instance.on(Clappr.Events.PLAYER_FULLSCREEN, function(e) {
-                    e.preventDefault(); // Tam ekran moduna geçişi engelle
-                    return false;
-                });
             },
             initMatchCleanup: function() {
                 window.app.clappr.instance.setVolume(100);
