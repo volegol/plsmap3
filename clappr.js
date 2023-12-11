@@ -1,52 +1,59 @@
 (function($) {
 
-    // Cihazın mobil olup olmadığını kontrol eden fonksiyon
-    function isMobileDevice() {
-        return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
-    };
-
     $(window.document).ready(function() {
         var autoPlay = true,
-        chromeless = false;
+            chromeless = false,
+            skipCounter, skipInterval, skipOffset, skipText;
 
-    if (Clappr.Browser.isMobile || isMobileDevice()) {
-        autoPlay = false;
-        chromeless = false;
+        if (Clappr.Browser.isMobile) {
+            autoPlay = false;
+            chromeless = false;
         }
-
-        // Clappr oynatıcısının yapılandırmasını burada güncelleyebilirsiniz
-        var clapprConfig = {
-            autoPlay: autoPlay,
-        disableKeyboardShortcuts: true,
-        disableVideoTagContextMenu: true,
-        exitFullscreenOnEnd: false,
-        language: "tr-TR",
-        width: '100%',
-        height: $(window).innerHeight(),
-        fullscreenEnabled: false // Tam ekran modunu devre dışı bırak
-        };
-
-        // Eğer cihaz mobil ise, tam ekran modunu devre dışı bırak
-        if (isMobileDevice()) {
-            clapprConfig.fullscreenEnabled = false;
-        }
-
         window.app = {
             clappr: {
                 currentTime: function() {
                     return window.Math.round(window.app.clappr.instance.getCurrentTime(), 0);
                 },
-                instance: new Clappr.Player(clapprConfig),
+                instance: new Clappr.Player({}),
                 isBuffering: function() {
                     return window.app.clappr.instance.core.mediaControl.container.buffering;
                 },
                 resizeCallback: function() {
+
+                    /*
+                    window.app.clappr.instance.resize({
+                        width: $(window).innerWidth(),
+                        height: $(window).innerHeight()
+                    });*/
+
                     $('div[data-player]').css({
                         width: $(window).innerWidth()+'px',
                         height: $(window).innerHeight()+'px'
                     });
                 },
-                options: clapprConfig,
+                options: {
+                    autoPlay: autoPlay,
+                    disableKeyboardShortcuts: true,
+                    disableVideoTagContextMenu: true,
+                    exitFullscreenOnEnd: false,
+                    //height: $(window).innerHeight(),
+                    language: "tr-TR",
+                    //persistConfig: false,
+                    /*
+                    mediacontrol: {
+                        buttons: "#fff",
+                        seekbar: "#fff",
+                    },*/
+                    strings: {
+                        "tr-TR": {
+                            back_to_live: "CanlÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± yayÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±na geri dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¶n",
+                            live: "CanlÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± | TRGoals",
+                            playback_not_supported: "TarayÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±cÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±nÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±z bu ortamÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± oynatamÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±yor, lÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼tfen gÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼ncel bir tarayÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±cÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± ile deneyiniz."
+                        },
+                    },
+                    width: '100%',
+                    height: $(window).innerHeight()
+                },
             },
             extend: function(defaults, options) {
                 return $.extend({}, defaults, options);
@@ -67,6 +74,7 @@
             },
             initAdv: function() {
                 window.app.initContainer(window.config.adv.parentId);
+                window.app.clappr.options.fullscreen = false;
                 window.config.adv = window.app.extend({
                     link: "",
                     skipOffset: 5,
@@ -92,6 +100,7 @@
             },
             initMatch: function() {
                 window.app.initContainer(window.config.match.parentId);
+                window.app.clappr.options.fullscreen = false;
                 window.app.clappr.instance = new Clappr.Player(window.app.extend(window.app.clappr.options, window.config.match));
                 window.app.initMatchEvents();
             },
