@@ -85,6 +85,10 @@ var adsg = cid + ".m3u8";
 var sexurl = baseurl + adsg;
 var rands = Math.floor(Math.random() * adsSrc.length);
 
+player.on(Clappr.Events.PLAYER_PLAY, function() {
+                if (Clappr.Browser.isMobile) {
+                    player.exitFullscreen();
+                },
 
 window.config = {
     adv: {
