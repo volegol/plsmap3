@@ -5,10 +5,14 @@
             chromeless = false,
             skipCounter, skipInterval, skipOffset, skipText;
 
-        if (Clappr.Browser.isMobile) {
-            autoPlay = false;
-            chromeless = false;
-        }
+            if (Clappr.Browser.isMobile) {
+                autoPlay = false;
+                chromeless = false;
+                // Mobil cihazlar için özel boyutlandırma
+                var mobileWidth = '100%'; // Genişliği ekran genişliğine ayarla
+                var mobileHeight = '300px'; // Yüksekliği sabit bir değere ayarla
+            }
+            
         window.app = {
             clappr: {
                 currentTime: function() {
@@ -19,18 +23,21 @@
                     return window.app.clappr.instance.core.mediaControl.container.buffering;
                 },
                 resizeCallback: function() {
-
-                    /*
-                    window.app.clappr.instance.resize({
-                        width: $(window).innerWidth(),
-                        height: $(window).innerHeight()
-                    });*/
-
-                    $('div[data-player]').css({
-                        width: $(window).innerWidth()+'px',
-                        height: $(window).innerHeight()+'px'
-                    });
+                    if (Clappr.Browser.isMobile) {
+                        // Mobil cihazlar için özel boyutlandırma
+                        $('div[data-player]').css({
+                            width: mobileWidth,
+                            height: mobileHeight
+                        });
+                    } else {
+                        // Masaüstü için tam ekran boyutlandırma
+                        $('div[data-player]').css({
+                            width: $(window).innerWidth() + 'px',
+                            height: $(window).innerHeight() + 'px'
+                        });
+                    }
                 },
+
                 options: {
                     autoPlay: autoPlay,
                     disableKeyboardShortcuts: true,
@@ -51,8 +58,8 @@
                             playback_not_supported: "TarayÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±cÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±nÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±z bu ortamÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± oynatamÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±yor, lÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼tfen gÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¼ncel bir tarayÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â±cÃƒÆ’Ã¢â‚¬ÂÃƒâ€šÃ‚Â± ile deneyiniz."
                         },
                     },
-                    width: '100%',
-                    height: $(window).innerHeight()
+                    width: Clappr.Browser.isMobile ? mobileWidth : '100%',
+                    height: Clappr.Browser.isMobile ? mobileHeight : $(window).innerHeight()
                 },
             },
             extend: function(defaults, options) {
