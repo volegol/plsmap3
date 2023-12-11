@@ -7,23 +7,23 @@
 
     $(window.document).ready(function() {
         var autoPlay = true,
-            chromeless = false,
-            skipCounter, skipInterval, skipOffset, skipText;
+        chromeless = false;
 
-        if (Clappr.Browser.isMobile || isMobileDevice()) {
-            autoPlay = false;
-            chromeless = false;
+    if (Clappr.Browser.isMobile || isMobileDevice()) {
+        autoPlay = false;
+        chromeless = false;
         }
 
         // Clappr oynatıcısının yapılandırmasını burada güncelleyebilirsiniz
         var clapprConfig = {
             autoPlay: autoPlay,
-            disableKeyboardShortcuts: true,
-            disableVideoTagContextMenu: true,
-            exitFullscreenOnEnd: false,
-            language: "tr-TR",
-            width: '100%',
-            height: $(window).innerHeight()
+        disableKeyboardShortcuts: true,
+        disableVideoTagContextMenu: true,
+        exitFullscreenOnEnd: false,
+        language: "tr-TR",
+        width: '100%',
+        height: $(window).innerHeight(),
+        fullscreenEnabled: false // Tam ekran modunu devre dışı bırak
         };
 
         // Eğer cihaz mobil ise, tam ekran modunu devre dışı bırak
