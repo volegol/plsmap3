@@ -36,9 +36,6 @@
                     disableKeyboardShortcuts: true,
                     disableVideoTagContextMenu: true,
                     exitFullscreenOnEnd: false,
-                    playback: {
-                        playInline: true,
-                    },
                     
                     //height: $(window).innerHeight(),
                     language: "tr-TR",
@@ -83,6 +80,9 @@
                     skipOffset: 5,
                     skipText: "Reklami gec",
                     skipTextN: "Reklami gecmek icin %d saniye kaldi",
+                     playback: {
+                        playInline: true,
+                    },
                 }, window.config.adv);
                 window.app.clappr.instance = new Clappr.Player(window.app.extend(window.app.clappr.options, window.app.extend(window.config.adv, {
                     chromeless: chromeless,
