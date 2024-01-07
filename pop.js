@@ -1,4 +1,4 @@
-var url = ['https://cutt.ly/EwAlzYoG'];
+var url = ['https://cutt.ly/QwAktafE'];
 
 var rndMax = 1800;
 var s = Math.floor((Math.random() * rndMax) + 1);
